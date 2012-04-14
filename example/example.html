@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>monaca.viewport.js example</title>
+<script type="text/javascript" src="../monaca.viewport.js"></script>
+<script type="text/javascript" src="./prettify.js"></script>
+<script type="text/javascript">
+
+function update(scale) {
+    document.getElementById("useragent").textContent = navigator.userAgent;
+    document.getElementById("scale").textContent = scale || "none";
+
+    if (monaca.viewport.isIos()) {
+        document.getElementById("device").textContent = "iOS";
+    } else if (monaca.viewport.isAndroid()) {
+        document.getElementById("device").textContent = "Android";
+    } else if (monaca.viewport.isPCBrowser()) {
+        document.getElementById("device").textContent = "PC";
+    }
+}
+
+monaca.viewport({
+    width : 600,
+    onAdjustment : update
+});
+
+window.addEventListener("load", function() {
+    prettyPrint();
+});
+
+if (monaca.viewport.isIos()) {
+    window.addEventListener("load", function() {
+        update(null);
+    });
+}
+</script>
+
+<link rel="stylesheet" type="text/css" href="prettify.css">
+<style type="text/css">
+body {
+    font-family : "Helvetica";
+    margin : 20px 0 0 0;
+    padding : 0;
+    overflow : hidden;
+}
+pre > * {
+    font-size : 10px;
+}
+h1, h1 > span {
+    text-align : center;
+    font-size: 50px;
+    margin: 20px 0;
+}
+.box {
+    background-color: #ccc;
+    height : 50px;
+    color : #fff;
+    text-align : center;
+    vertical-align : middle;
+    line-height: 50px;
+    font-size: 20px;
+    border-right: 1px solid #000;
+}
+p {
+    margin-left: 10px;
+}
+.label {
+    display : inline-block;
+    background-color : green;
+    color : white;
+    border-radius : 4px;
+    padding : 0 4px;
+    font-weight : bold;
+}
+.value {
+    display : inline-block;
+    width : 60%;
+    vertical-align : top;
+}
+</style>
+</head>
+<body>
+
+<h1>monaca.viewport.js <span style="font-weight: normal;">example</span></h1>
+
+<p><span class="label" style="margin: 0;">Code</span><pre class="prettyprint lang-html" style="border: 0px; padding : 0; margin : 0em 1em 0em 1em;">
+&lt;script type=&quot;text/javascript&quot; src=&quot;monaca.viewport.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+monaca.viewport({
+    width : 600,
+    onAdjustment : function(scale) {
+        // write code something.
+    }
+});
+&lt;/script&gt;</pre></p>
+
+<div style="width : 599px; margin-top: 1em;" class="box">
+&nbsp;600px&nbsp;
+</div>
+
+<div style="width : 399px" class="box">
+&nbsp;400px&nbsp;
+</div>
+
+<div style="width : 199px" class="box">
+&nbsp;200px&nbsp;
+</div>
+
+<p><span class="label">UserAgent</span> <span id="useragent" class="value">...</span></p>
+
+<p><span class="label">Computed scale</span> <span id="scale" class="value">...</span></p>
+
+<p><span class="label">Detected device</span> <span id="device" class="value">...</span></p>
+
+</body>
+</html>
