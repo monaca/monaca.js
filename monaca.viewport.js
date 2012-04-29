@@ -22,7 +22,7 @@
  */
 
 (function() {
-    window.monaca = {};
+    window.monaca = window.monaca || {};
 
     var IS_DEV = false;
     var d = IS_DEV ? alert : function(line) { console.log(line); };
