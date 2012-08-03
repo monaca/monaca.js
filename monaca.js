@@ -16,9 +16,10 @@ window.monaca = window.monaca || {};
     /**
      * Update style property
      */
-    monaca.updateUIStyle = function(id, name, value) {
+    monaca.ui.updateStyle = function(id, name, value) {
         if (typeof id == "string") {
-            PhoneGap.exec(function(a) { alert(a); } , function(a) { alert(a); }, "mobi.monaca.nativecomponent", "update", arguments);
+        	var argsArray = [].slice.apply(arguments);
+            PhoneGap.exec(null, null, "mobi.monaca.nativecomponent", "update", argsArray);
         } else {
             for (var i = 0; i < id.length; i++) {
                 PhoneGap.exec(null, null, "mobi.monaca.nativecomponent", "update", [id[i], name, value]);
@@ -29,8 +30,9 @@ window.monaca = window.monaca || {};
     /**
      * Obtain style property
      */
-    monaca.retrieveUIStyle = function() {
-        PhoneGap.exec(arguments[arguments.length-1], null, "mobi.monaca.nativecomponent", "retrieve", arguments);
+    monaca.ui.retrieveStyle = function() {
+    	var argsArray = [].slice.apply(arguments);
+        PhoneGap.exec(arguments[arguments.length-1], null, "mobi.monaca.nativecomponent", "retrieve", argsArray);
     };
     
     if (isAndroid) {
