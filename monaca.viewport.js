@@ -52,17 +52,18 @@
     };
 
     var zoom = function(ratio) {
-
-        if ("OTransform" in document.body.style) {
-            document.body.style.OTransform = "scale(" + ratio + ")";
-            document.body.style.OTransformOrigin = "top left";
-            document.body.style.width = Math.round(window.innerWidth / ratio) + "px";
-        } else if ("MozTransform" in document.body.style) {
-            document.body.style.MozTransform = "scale(" + ratio + ")";
-            document.body.style.MozTransformOrigin = "top left";
-            document.body.style.width = Math.round(window.innerWidth / ratio) + "px";
-        } else {
-            document.body.style.zoom = ratio;
+        if (document.body) {
+            if ("OTransform" in document.body.style) {
+                document.body.style.OTransform = "scale(" + ratio + ")";
+                document.body.style.OTransformOrigin = "top left";
+                document.body.style.width = Math.round(window.innerWidth / ratio) + "px";
+            } else if ("MozTransform" in document.body.style) {
+                document.body.style.MozTransform = "scale(" + ratio + ")";
+                document.body.style.MozTransformOrigin = "top left";
+                document.body.style.width = Math.round(window.innerWidth / ratio) + "px";
+            } else {
+                document.body.style.zoom = ratio;
+            }
         }
     };
 
