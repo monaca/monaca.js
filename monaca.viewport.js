@@ -106,7 +106,7 @@ d(params.width);
                     var changed = Math.abs(aspect - oldAspect) > 0.0001;
                     oldAspect = aspect;
 
-                    alert("aspect ratio changed");
+                    d("aspect ratio changed");
                     return changed;
                 };
             });
