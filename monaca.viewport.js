@@ -111,17 +111,19 @@ d(params.width);
                 };
             });
 
-            window.addEventListener("resize", function() {
-                var left = orientationChanged();
-                var right = aspectRatioChanged();
+            if (params.width !== 'device-width') {
+                window.addEventListener("resize", function() {
+                    var left = orientationChanged();
+                    var right = aspectRatioChanged();
 
-                if (left || right) {
+                    if (left || right) {
+                        monaca.viewport.adjust();
+                    }
+                }, false);
+                document.addEventListener('DOMContentLoaded', function() {
                     monaca.viewport.adjust();
-                }
-            }, false);
-            document.addEventListener('DOMContentLoaded', function() {
-                monaca.viewport.adjust();
-            });
+                });
+            }
         };
     } else {
         monaca.viewport = function(params) {
@@ -135,12 +137,14 @@ d(params.width);
                 params.onAdjustment(scale);
             };
 
-            window.addEventListener("resize", function() {
-                monaca.viewport.adjust();
-            }, false);
-            document.addEventListener("DOMContentLoaded", function() {
-                monaca.viewport.adjust();
-            });
+            if (params.width !== 'device-width') {
+                window.addEventListener("resize", function() {
+                    monaca.viewport.adjust();
+                }, false);
+                document.addEventListener("DOMContentLoaded", function() {
+                    monaca.viewport.adjust();
+                });
+            }
         };
     }
 
