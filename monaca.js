@@ -1,6 +1,6 @@
 /**
  * Monaca Functions
- *  Version 1.3.0
+ *  Version 1.4.0
  *  require cordova.js
  *
  * @author Katsuya SAITO <info@monaca.mobi>
@@ -8,7 +8,7 @@
  * @author Hiroki NAKAGAWA <info@monaca.mobi>
  * @author Mitsunori KUBOTA <info@monaca.mobi>
  * @author Masahiro TANAKA <info@monaca.mobi>
- * @date   2012/11/28
+ * @date   2013/01/25
  */
 window.monaca = window.monaca || {};
 
@@ -106,7 +106,7 @@ window.monaca = window.monaca || {};
     monaca.popPage = function(options) {
         options = options || {};
         var name = options.animation == 'lift' ? 'dismiss' : 'pop';
-        monaca.apiQueue.exec(null, null, transitionPluginName, name, []);
+        monaca.apiQueue.exec(null, null, transitionPluginName, name, [null, options]);
     };
 
     /**
@@ -130,6 +130,47 @@ window.monaca = window.monaca || {};
         options = options || {};
         monaca.apiQueue.exec(null, null, transitionPluginName, "home", [options]);
     };
+
+    /**
+     * Console API from independent PhoneGap.
+     */
+    window.monaca.console = window.monaca.console || {};
+
+    /**
+     * base method for send log.
+     */
+    monaca.console.sendLog = function(level, arguments) {
+        var messages = new Array();
+
+        for (var i=0; i<arguments.length; i++){
+            if (typeof arguments[i] == "string") {
+                messages[i] = arguments[i];
+            } else {
+                messages[i] = JSON.stringify(arguments[i]);
+            }
+        }
+        if (isAndroid) {
+                // TODO
+        } else {
+            var xhr = new XMLHttpRequest();
+            var path = "monaca://log?level=" + encodeURIComponent(level) + "&message=" + encodeURIComponent(messages.join(" "));
+            xhr.open("GET", path);
+            xhr.send();
+        }
+    }
+
+    /**
+     * monaca console methods
+     */
+    var methods = ["debug", "info", "log", "warn", "error"];
+    for (var i=0; i<methods.length; i++) {
+        var method = methods[i];
+        monaca.console[method] = function(method) {
+            return function() {
+                monaca.console.sendLog(method, arguments);
+            };
+        }(method);
+    }
 
     window.monaca.splashScreen = window.monaca.splashScreen || {};
     var splashScreenPluginName = "MonacaSplashScreen";
