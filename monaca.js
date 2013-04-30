@@ -106,7 +106,7 @@ window.monaca = window.monaca || {};
     monaca.popPage = function(options) {
         options = options || {};
         var name = options.animation == 'lift' ? 'dismiss' : 'pop';
-        monaca.apiQueue.exec(null, null, transitionPluginName, name, []);
+        monaca.apiQueue.exec(null, null, transitionPluginName, name, [null, options]);
     };
 
     /**
